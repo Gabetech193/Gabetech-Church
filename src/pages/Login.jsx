@@ -35,7 +35,7 @@ export default function Login() {
   return (
     <div className="auth-wrap">
       <form className="auth-card" onSubmit={submit}>
-        <span className="brand-mark big" />
+        <img className="login-logo" src="/logo.png" alt="Gabetech Church Kimilili" />
         <h1>Gabetech Church Management</h1>
         <p>{mode === 'in' ? 'Sign in to continue.' : 'Create your staff account.'}</p>
 

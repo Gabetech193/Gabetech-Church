@@ -24,6 +24,7 @@ export default function Dashboard({ profile, goto }) {
   const months = useMemo(lastSixMonths, [])
   const [members, setMembers] = useState(null)
   const [giving, setGiving] = useState([])
+  const [next, setNext] = useState(null)
 
   useEffect(() => {
     ;(async () => {
@@ -32,6 +33,15 @@ export default function Dashboard({ profile, goto }) {
         .select('id,full_name,phone,status,date_of_birth,join_date')
         .limit(5000)
       setMembers(m.data || [])
+      const startOfToday = new Date()
+      startOfToday.setHours(0, 0, 0, 0)
+      const ev = await supabase
+        .from('events')
+        .select('id,title,start_at,location')
+        .gte('start_at', startOfToday.toISOString())
+        .order('start_at')
+        .limit(1)
+      setNext(ev.data && ev.data[0] ? ev.data[0] : null)
       if (seeMoney) {
         const g = await supabase
           .from('giving')
@@ -138,6 +148,27 @@ export default function Dashboard({ profile, goto }) {
           <strong>{members.filter((m) => m.status === 'visitor').length}</strong>
         </div>
       </div>
+
+      <button className="panel next-event" onClick={() => goto('events')}>
+        <small>Next event</small>
+        {next ? (
+          <>
+            <strong>{next.title}</strong>
+            <span className="muted">
+              {new Date(next.start_at).toLocaleString('en-GB', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'short',
+                hour: 'numeric',
+                minute: '2-digit',
+              })}
+              {next.location ? `, ${next.location}` : ''}
+            </span>
+          </>
+        ) : (
+          <span className="muted">Nothing scheduled yet. Tap to add an event.</span>
+        )}
+      </button>
 
       <section className="panel">
         <h2>Birthdays this month</h2>
