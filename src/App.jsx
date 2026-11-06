@@ -5,12 +5,14 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Members from './pages/Members'
 import Giving from './pages/Giving'
+import Events from './pages/Events'
 import Staff from './pages/Staff'
 
 const NAV = [
   { id: 'home', label: 'Home', icon: 'home', roles: ['admin', 'treasurer', 'secretary'] },
   { id: 'members', label: 'Members', icon: 'users', roles: ['admin', 'treasurer', 'secretary'] },
   { id: 'giving', label: 'Giving', icon: 'heart', roles: ['admin', 'treasurer'] },
+  { id: 'events', label: 'Events', icon: 'calendar', roles: ['admin', 'treasurer', 'secretary'] },
   { id: 'staff', label: 'Staff', icon: 'shield', roles: ['admin'] },
 ]
 
@@ -88,16 +90,17 @@ function Shell() {
   if (current === 'home') view = <Dashboard profile={profile} goto={setPage} />
   if (current === 'members') view = <Members role={role} />
   if (current === 'giving') view = <Giving role={role} />
+  if (current === 'events') view = <Events role={role} />
   if (current === 'staff') view = <Staff me={profile} />
 
   return (
     <div className="app">
       <aside className="side">
         <div className="brand">
-          <span className="brand-mark" />
+          <img className="brand-logo" src="/logo.png" alt="Gabetech Church logo" />
           <div>
-            <strong>Gabetech</strong>
-            <small>Church Management</small>
+            <strong>Gabetech Church</strong>
+            <small>Kimilili</small>
           </div>
         </div>
         <nav>
@@ -126,7 +129,7 @@ function Shell() {
       <div className="main">
         <header className="topbar">
           <div className="brand">
-            <span className="brand-mark" />
+            <img className="brand-logo" src="/logo.png" alt="" />
             <strong>Gabetech Church</strong>
           </div>
           <button className="link light" onClick={signOut}>

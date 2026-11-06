@@ -5,4 +5,4 @@ const key = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const configured = Boolean(url && key)
 export const supabase = configured ? createClient(url, key) : null
-export const CHURCH_NAME = import.meta.env.VITE_CHURCH_NAME || 'Our Church'
+export const CHURCH_NAME = import.meta.env.VITE_CHURCH_NAME || 'Gabetech Church, Kimilili'
